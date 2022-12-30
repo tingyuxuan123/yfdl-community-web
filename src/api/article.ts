@@ -32,3 +32,11 @@ export const articleListByUserLikes = (userId: number) => {
     userId
   })
 }
+
+export const articleListByRecommended = () => {
+  return request('/article/articleListByRecommended', 'get')
+}
+
+export const articleListByNew = () => {
+  return request('/article/articleListByNew', 'get')
+}

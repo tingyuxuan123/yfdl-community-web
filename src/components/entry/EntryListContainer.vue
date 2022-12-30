@@ -7,10 +7,14 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive, ref } from 'vue'
+import { reactive, ref, watch } from 'vue'
 import EntryListHeader from './EntryListHeader.vue'
 import EntryList from '@/components/entry/EntryList.vue'
-import { articleList } from '@/api/article'
+import {
+  articleList,
+  articleListByRecommended,
+  articleListByNew
+} from '@/api/article'
 import type { ArticleListInfo } from '@/api/apiType'
 let pageinfo = {
   currentPage: 1,
@@ -19,17 +23,37 @@ let pageinfo = {
 
 let articles = ref<ArticleListInfo[]>(null)
 
-const getarticleList = async () => {
-  const res: any = await articleList({}, pageinfo)
+const currentMenu = ref('推荐')
 
+const getArticleListByRecommended = async () => {
+  const res: any = await articleListByRecommended()
   articles.value = res.data.rows
-  console.log(articles.value)
 }
 
-getarticleList()
+const getArticleListByNew = async () => {
+  const res: any = await articleListByNew()
+  articles.value = res.data.rows
+}
 
-let menuClick = (menu) => {
-  console.log(menu)
+watch(currentMenu, (newValue: string) => {
+  switch (newValue) {
+    case '推荐':
+      getArticleListByRecommended()
+      break
+    case '最新':
+      getArticleListByNew()
+      break
+    case '热榜':
+      console.log('热榜')
+      break
+  }
+})
+
+getArticleListByRecommended()
+
+//menu改变
+let menuClick = (menu: any) => {
+  currentMenu.value = menu.menuname
 }
 </script>
 

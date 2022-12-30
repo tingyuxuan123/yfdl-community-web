@@ -65,7 +65,9 @@ type Props = {
 const props = defineProps<Props>()
 
 let activeName = ref('dynamic')
-// const handleClick = () => {}
+const handleClick = () => {
+  //..
+}
 </script>
 
 <style scoped lang="scss">

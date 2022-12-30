@@ -3,15 +3,16 @@
     <div class="img">
       <img :src="userinfo.avatar" alt="" />
     </div>
+
     <div class="info">
       <div class="nickname">{{ userinfo.nickName }}</div>
 
       <div class="job">
-        <span v-if="userinfo.position" class="visible"
-          ><i class="iconfont icon-office"></i> {{ userinfo.position }}</span
-        >
-        <span class="tip" v-else
-          ><svg
+        <span v-if="userinfo.position" class="visible">
+          <i class="iconfont icon-office"></i> {{ userinfo.position }}
+        </span>
+        <span class="tip" v-else>
+          <svg
             viewBox="64 64 896 896"
             data-icon="plus"
             width="1em"
@@ -28,16 +29,16 @@
               d="M176 474h672q8 0 8 8v60q0 8-8 8H176q-8 0-8-8v-60q0-8 8-8z"
             ></path>
           </svg>
-          你从事什么职业</span
-        >
+          你从事什么职业
+        </span>
       </div>
 
       <div class="label">
         <span v-if="userinfo.label" class="visible">
-          <i class="iconfont icon-intro"></i> {{ userinfo.label }}</span
-        >
-        <span class="tip" v-else
-          ><svg
+          <i class="iconfont icon-intro"></i> {{ userinfo.label }}
+        </span>
+        <span class="tip" v-else>
+          <svg
             viewBox="64 64 896 896"
             data-icon="plus"
             width="1em"
@@ -52,9 +53,10 @@
             ></path>
             <path
               d="M176 474h672q8 0 8 8v60q0 8-8 8H176q-8 0-8-8v-60q0-8 8-8z"
-            ></path></svg
-          >你有哪些爱好</span
-        >
+            ></path>
+          </svg>
+          你有哪些爱好
+        </span>
       </div>
     </div>
 
@@ -73,8 +75,12 @@
       </div>
       <div class="following">
         <div v-if="!isOww">
-          <el-button v-if="!userinfo.isFollow" @click="follow">关注</el-button>
-          <el-button @click="follow" class="hasFollow" v-else>已关注</el-button>
+          <el-button v-if="!userinfo.isFollow" @click="handelFollow"
+            >关注</el-button
+          >
+          <el-button v-else @click="handelFollow" class="hasFollow"
+            >已关注</el-button
+          >
           <el-button>私信</el-button>
         </div>
         <div v-else>
@@ -89,6 +95,7 @@
 import { reactive, ref, inject, computed } from 'vue'
 import { useUserStore } from '@/stores/userStore'
 import { useRouter } from 'vue-router'
+import { follow } from '@/utils/utils'
 
 const userStore = useUserStore()
 
@@ -123,7 +130,11 @@ let userinfo = inject<UserInfoByHomePage>('userinfo')
 
 console.log(userinfo)
 
-const follow = () => {}
+//添加关注
+const handelFollow = async () => {
+  await follow(props.id)
+  userinfo.isFollow = !userinfo.isFollow
+}
 
 const isOww = computed(() => {
   return userStore.userInfo.id == userinfo.id

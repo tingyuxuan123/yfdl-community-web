@@ -76,7 +76,7 @@
                     <el-button v-if="!userInfo.isFollow" @click="handelFollow"
                       >关注</el-button
                     >
-                    <el-button @click="follow" class="hasFollow" v-else
+                    <el-button @click="handelFollow" class="hasFollow" v-else
                       >已关注</el-button
                     >
                     <el-button>私信</el-button>
