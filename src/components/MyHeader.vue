@@ -126,7 +126,7 @@ const toSetting = () => {
 }
 
 const toManagement = () => {
-  window.location.href = 'http://127.0.0.1:5174/layout'
+  window.location.href = import.meta.env.VITE_ADMIN_ADDRESS
 }
 </script>
 

@@ -8,11 +8,12 @@ import { useUserStore } from '@/stores/userStore'
 import { usescrollStore } from '@/stores/useScroll'
 import router from '@/router'
 import { ElMessage } from 'element-plus'
-export const baseURL: string = 'http://127.0.0.1:7777/'
+import { baseURL, TIME_OUT } from '@/api/config/index'
+// export const baseURL = 'http://127.0.0.1:7777/'
 
 const instance = axios.create({
   baseURL,
-  timeout: 15000
+  timeout: TIME_OUT
 })
 
 instance.interceptors.request.use(
@@ -35,7 +36,7 @@ instance.interceptors.response.use(
   (res) => {
     const userStore = useUserStore()
     if (res.data.code === 401) {
-      let scrollStore = usescrollStore()
+      const scrollStore = usescrollStore()
       userStore.$reset() //清空用户数据
 
       ElMessage({
