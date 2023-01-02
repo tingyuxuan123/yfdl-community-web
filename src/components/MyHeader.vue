@@ -2,7 +2,7 @@
   <div class="myheader">
     <div class="content">
       <div class="myheader-left">
-        <div class="logo">遥宇</div>
+        <div class="logo"><img src="/logo.png" alt="" />遥宇</div>
         <my-menu :menu-list="menuList" :route="true"></my-menu>
       </div>
       <div class="myheader-right">
@@ -151,10 +151,19 @@ const toManagement = () => {
 
   .myheader-left {
     display: flex;
+    align-items: center;
     width: 500px;
 
     .logo {
       margin-right: 15px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      img {
+        width: 30px;
+        height: 30;
+        margin-right: 15px;
+      }
     }
   }
 
