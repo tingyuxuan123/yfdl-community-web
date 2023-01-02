@@ -22,7 +22,7 @@
     <div class="entry-item-bottom">
       <div class="item-left">
         <span
-          ><el-icon><View /></el-icon> {{ article.viewCount }}</span
+          ><el-icon><View /></el-icon>{{ article.viewCount }}</span
         >
         <span>
           <svg-icon iconClass="likes"></svg-icon> {{ article.likesCount }}</span
@@ -32,7 +32,7 @@
         >
       </div>
       <div class="item-right">
-        <span v-for="tag in article.tags">
+        <span v-for="tag in article.tags" :key="tag.id">
           {{ tag.name }}
         </span>
       </div>
@@ -145,6 +145,8 @@ const handleClick = () => {
       align-items: center;
 
       span {
+        display: flex;
+        align-items: center;
         font-size: 12px;
         color: var(--theme-text3-color);
         margin-right: 12px;
