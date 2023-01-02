@@ -23,6 +23,7 @@
       v-if="comments.length > 0"
       class="comment-item"
       v-for="comment in comments"
+      :key="comment.id"
     >
       <img :src="comment.avatar" alt="" />
       <div class="content">
@@ -57,7 +58,11 @@
           @click.stop=""
         ></send-comment>
         <div class="replys" v-if="comment.children.length > 0">
-          <div class="comment-item" v-for="reply in comment.children">
+          <div
+            class="comment-item"
+            v-for="reply in comment.children"
+            :key="reply.id"
+          >
             <img :src="reply.avatar" alt="" />
             <div class="content">
               <div class="content-header">

@@ -15,7 +15,7 @@
           >
           <div class="emjoyForm">
             <div class="list">
-              <div class="item" v-for="item in emjoys">
+              <div class="item" v-for="item in emjoys" :key="item">
                 <span>
                   <img :src="item.url" alt="" @click="emjoyClick(item.url)" />
                 </span>
@@ -40,7 +40,6 @@ import { Message } from '@element-plus/icons-vue'
 import { ElMessage } from 'element-plus'
 const userStore = useUserStore()
 let emjoys = ref([])
-
 let isVisible = ref(false)
 
 type Props = {
@@ -51,18 +50,21 @@ let props = defineProps<Props>()
 let emits = defineEmits(['sendClick'])
 
 let getEmojys = () => {
-  const modulesFiles = import.meta.glob(
-    '@/components/comment/sendComment/emjoy/*.png'
-  )
+  // '@/components/comment/sendComment/emjoy/*.png',
+  const modulesFiles = import.meta.glob('../sendComment/emjoy/*.png', {
+    eager: true
+  })
 
   const arr = Object.keys(modulesFiles).map((i) => {
     let fileName = i.replace(/(.*\/)*([^.]+).*/gi, '$2') //获取文件名
+    let url: any = modulesFiles[i]
 
-    return { name: fileName, url: i }
+    return { name: fileName, url: url.default }
   })
 
   return arr
 }
+
 emjoys.value = getEmojys()
 
 const emjoybtnClick = () => {

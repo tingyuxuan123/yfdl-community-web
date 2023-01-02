@@ -7,7 +7,7 @@ if (import.meta.env.PROD) {
   baseURL = 'http://yfdl.site:7777'
 } else {
   //开发环境
-  baseURL = 'http://127.0.0.1:5173'
+  baseURL = 'http://127.0.0.1:7777'
 }
 
 export { baseURL, TIME_OUT }
