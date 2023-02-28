@@ -79,18 +79,22 @@
                     <el-button @click="handelFollow" class="hasFollow" v-else
                       >已关注</el-button
                     >
-                    <el-button>私信</el-button>
+                    <el-button
+                      @click="toNotification(userInfo.id)"
+                      :disabled="userInfo.id == userStore.userInfo.id"
+                      >私信</el-button
+                    >
                   </div>
                 </div>
               </template>
               <template #content>
                 <div class="userinfo-bottom">
                   <div>
-                    <span> <i class="iconfont icon-like"></i> 获赞点击</span>
+                    <span> <i class="iconfont icon-like"></i> 获赞点击：</span>
                     <span>{{ userInfo.likesCount }}</span>
                   </div>
                   <div>
-                    <span> <i class="iconfont icon-eye"></i> 文章被阅读</span>
+                    <span> <i class="iconfont icon-eye"></i> 文章被阅读：</span>
                     <span>{{ userInfo.readCount }}</span>
                   </div>
                 </div>
@@ -98,11 +102,22 @@
             </aside-item>
             <!-- 相关文章 -->
             <aside-item>
-              <template #header> 相关文章 </template>
+              <template #header>
+                <i class="iconfont icon-relat-article xga"></i> 相关文章
+              </template>
               <template #content>
-                <li>12</li>
-                <li>12</li>
-                <li>12</li>
+                <li
+                  class="relatedArticle"
+                  v-for="item in relatedArticle"
+                  :key="item.id"
+                  @click="handleClick(item.id)"
+                >
+                  <p class="title">{{ item.title }}</p>
+                  <div class="articleinfo">
+                    <span>{{ item.viewCount }}观看</span> ·
+                    <span>{{ item.commentCount }}评论</span>
+                  </div>
+                </li>
               </template>
             </aside-item>
             <!-- 目录 -->
@@ -145,7 +160,11 @@
 <script lang="ts" setup>
 import { nextTick, reactive, ref, computed, onMounted, onUnmounted } from 'vue'
 import { useRoute } from 'vue-router'
-import { articleDetail, updateViewCount } from '@/api/article'
+import {
+  articleDetail,
+  updateViewCount,
+  articleListByRelated
+} from '@/api/article'
 import type { ArticleDetail, AuthorInfoByArticle } from '@/api/apiType'
 import { authorInfoByArticle } from '@/api/user'
 import md from '@/components/MD.vue'
@@ -164,6 +183,9 @@ import AddCollect from '@/components/collection/AddCollect.vue'
 import { cancelCollect } from '@/api/collect'
 import { ElMessage } from 'element-plus'
 import router from '@/router'
+import { useUserStore } from '@/stores/userStore'
+
+const userStore = useUserStore()
 
 const route = useRoute()
 const id = route.params.id || null
@@ -231,6 +253,8 @@ const getarticleDetail = async () => {
   info.createTime = detail.value.createTime
   info.nickName = detail.value.nickName
   info.viewCount = detail.value.viewCount
+
+  getArticleListByRelated()
 }
 
 getarticleDetail()
@@ -274,8 +298,12 @@ const handleScroll = () => {
     document.documentElement.scrollTop ||
     document.body.scrollTop
 
+  // isFixed.value =
+  //   scrollTop - 15 > catalogueDom.value.getBoundingClientRect().top
+  //     ? true
+  //     : false
   isFixed.value =
-    scrollTop - 15 > catalogueDom.value.getBoundingClientRect().top
+    catalogueDom.value.getBoundingClientRect().top < 133 && scrollTop > 133
       ? true
       : false
   //isFixed.value = scrollTop > 133? true : false;
@@ -283,7 +311,7 @@ const handleScroll = () => {
 
 //添加关注
 const handelFollow = async () => {
-  await follow(info.id)
+  await follow(userInfo.id)
   userInfo.isFollow = !userInfo.isFollow
 }
 
@@ -357,6 +385,33 @@ const toUser = (id: number) => {
     name: 'user',
     params: {
       id
+    }
+  })
+}
+
+const relatedArticle = ref([])
+//获取相关文章
+const getArticleListByRelated = async () => {
+  const res = await articleListByRelated(detail.value.title)
+  relatedArticle.value = res.data
+  console.log(relatedArticle.value)
+}
+
+const handleClick = (id: number) => {
+  let { href } = router.resolve({
+    name: 'detail',
+    params: {
+      id: id
+    }
+  })
+  window.open(href, '_blank')
+}
+
+const toNotification = (id: number) => {
+  router.push({
+    name: 'notification',
+    query: {
+      participantId: id
     }
   })
 }
@@ -486,6 +541,11 @@ const toUser = (id: number) => {
   width: 300px;
   top: 68px;
   background-color: var(--theme-bg4-color);
+  border-radius: 5px;
+
+  .aside-item {
+    margin-bottom: 0px;
+  }
 }
 
 .userinfo {
@@ -567,8 +627,35 @@ const toUser = (id: number) => {
         border-radius: 999px;
         justify-content: center;
         align-items: center;
+        margin-right: 5px;
       }
     }
   }
+}
+.relatedArticle {
+  list-style: none;
+  margin-bottom: 10px;
+  cursor: pointer;
+  .title {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 22px;
+    margin-bottom: 0px;
+  }
+  .articleinfo {
+    margin-top: 5px;
+  }
+  span {
+    color: #8a919f;
+  }
+
+  &:hover {
+    .title {
+      color: var(--theme-text5-color);
+    }
+  }
+}
+.xga {
+  color: var(--theme-text5-color);
 }
 </style>

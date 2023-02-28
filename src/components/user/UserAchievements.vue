@@ -9,12 +9,12 @@
       <template #content>
         <ul>
           <li>
-            <span> <i class="iconfont icon-like"></i> 获赞点击</span>
-            <span>{{ userinfo.likesCount }}</span>
+            <span> <i class="iconfont icon-like"></i> 获赞点击：</span>
+            <span class="likesCount">{{ userinfo.likesCount }}</span>
           </li>
           <li>
-            <span> <i class="iconfont icon-eye"></i> 文章被阅读</span>
-            <span>{{ userinfo.readCount }}</span>
+            <span> <i class="iconfont icon-eye"></i> 文章被阅读：</span>
+            <span class="readCount">{{ userinfo.readCount }}</span>
           </li>
         </ul>
       </template>
@@ -73,5 +73,14 @@ span {
     justify-content: center;
     align-items: center;
   }
+}
+
+.iconfont {
+  margin-right: 4px;
+}
+
+.readCount,
+.likesCount {
+  /* margin-left: 2px; */
 }
 </style>

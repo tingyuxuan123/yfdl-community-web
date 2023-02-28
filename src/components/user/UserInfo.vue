@@ -81,7 +81,7 @@
           <el-button v-else @click="handelFollow" class="hasFollow"
             >已关注</el-button
           >
-          <el-button>私信</el-button>
+          <el-button @click="toNotification(userinfo.id)">私信</el-button>
         </div>
         <div v-else>
           <el-button @click="toSet">编辑个人资料</el-button>
@@ -152,6 +152,15 @@ const router = useRouter()
 const toSet = () => {
   router.push({
     name: 'settings'
+  })
+}
+
+const toNotification = (id: number) => {
+  router.push({
+    name: 'notification',
+    query: {
+      participantId: id
+    }
   })
 }
 </script>

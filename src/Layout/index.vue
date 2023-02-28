@@ -23,7 +23,7 @@ import login from '@/views/login.vue'
 .layout {
   width: 100vw;
   height: 100%;
-  min-height: 100vw;
+  min-height: 100vh;
   background-color: var(--theme-bg1-color);
 
   header {

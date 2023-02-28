@@ -42,6 +42,36 @@ const router = createRouter({
               component: () => import('@/components/settings/account.vue')
             }
           ]
+        },
+        {
+          name: 'search',
+          path: 'search',
+          component: () => import('@/views/search.vue')
+        },
+        {
+          name: 'span',
+          path: 'span',
+          component: () => import('@/views/span.vue')
+        },
+        {
+          name: 'category',
+          path: 'category',
+          component: () => import('@/views/category.vue')
+        },
+        {
+          name: 'label',
+          path: 'label/:id',
+          component: () => import('@/views/label.vue')
+        },
+        {
+          name: 'collection',
+          path: 'collection/:id',
+          component: () => import('@/components/user/collect/collection.vue')
+        },
+        {
+          name: 'notification',
+          path: 'notification',
+          component: () => import('@/views/notification.vue')
         }
       ]
     }

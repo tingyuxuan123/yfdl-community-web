@@ -27,7 +27,7 @@ let menulist = ref<Menu[]>([
     active: false
   },
   {
-    menuname: '热榜',
+    menuname: '动态',
     active: false
   }
 ])

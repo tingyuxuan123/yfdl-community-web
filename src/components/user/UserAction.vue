@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-tabs v-model="activeName" class="tabs" @tab-click="handleClick">
-      <el-tab-pane label="动态" name="dynamic">
+      <!-- <el-tab-pane label="动态" name="dynamic">
         <template #label>
           <span class="custom-tabs-label">
             <svg-icon iconClass="dynamic"></svg-icon>
@@ -9,7 +9,7 @@
           </span>
         </template>
         User
-      </el-tab-pane>
+      </el-tab-pane> -->
       <el-tab-pane label="文章" name="article">
         <template #label>
           <span class="custom-tabs-label">
@@ -64,7 +64,7 @@ type Props = {
 }
 const props = defineProps<Props>()
 
-let activeName = ref('dynamic')
+let activeName = ref('article')
 const handleClick = () => {
   //..
 }

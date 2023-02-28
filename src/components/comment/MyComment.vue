@@ -31,7 +31,10 @@
           <span class="username"> {{ comment.username }}</span>
           <span class="createTime">{{ formatting(comment.createTime) }}</span>
         </div>
-        <div class="content-comment" v-html="comment.content"></div>
+        <div
+          class="content-comment"
+          v-html="spanToEmjoy(comment.content)"
+        ></div>
         <div class="content-footer">
           <span
             @click="
@@ -73,7 +76,10 @@
                   formatting(reply.createTime)
                 }}</span>
               </div>
-              <div class="content-comment" v-html="reply.content"></div>
+              <div
+                class="content-comment"
+                v-html="spanToEmjoy(reply.content)"
+              ></div>
               <div class="content-footer">
                 <span
                   @click="
@@ -116,7 +122,7 @@ import type { SendCommentInfo } from '@/api/apiType'
 import { useRoute } from 'vue-router'
 import { isLogin } from '@/utils/utils'
 import { likeCommentByArticle } from '@/api/likesComment'
-
+import emjoys from '@/assets/data/emjoy.json'
 const userStore = useUserStore()
 const scrollStore = usescrollStore()
 const route = useRoute()
@@ -239,6 +245,27 @@ const isLike = (commentId: number) => {
 
   return likesCommentList.value.some((item) => {
     return item == commentId
+  })
+}
+
+//标签转标签
+const spanToEmjoy = (message: string) => {
+  const reg = /\[.+?\]/g
+
+  return message.replace(reg, function (a, b) {
+    for (let item of emjoys.emjoys) {
+      if (item.imgName == a) {
+        let imgElE = document.createElement('img')
+        imgElE.setAttribute('src', item.imgUrl)
+        imgElE.style.marginLeft = '2px'
+        imgElE.setAttribute('alt', item.imgName)
+        imgElE.style.width = '16px'
+        imgElE.style.height = '16px'
+        imgElE.style.verticalAlign = 'text-top'
+        return imgElE.outerHTML
+      }
+    }
+    return a
   })
 }
 

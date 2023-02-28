@@ -15,7 +15,7 @@
 
 <script lang="ts" setup name="menu">
 import { reactive, ref, watch, computed } from 'vue'
-import { useRouter } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 
 const router = useRouter()
 
@@ -57,8 +57,6 @@ const menuClick = (index: number, menu: Menu) => {
   })
   //若果route 为ture 开启路由
   if (props.route) {
-    console.log('跳转')
-
     router.push(menu.path)
   }
 

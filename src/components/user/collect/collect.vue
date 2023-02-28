@@ -29,7 +29,12 @@
 
     <div class="content">
       <ul>
-        <li class="collect-item" v-for="item in collections" :key="item.id">
+        <li
+          class="collect-item"
+          v-for="item in collections"
+          :key="item.id"
+          @click="toCollection(item.id)"
+        >
           <div class="item-top">
             {{ item.collectionName }}
           </div>
@@ -40,7 +45,7 @@
             <span> {{ item.collectCount }}篇文章 </span>
             <NeedAuth :id="props.id">
               <div class="item-bottom-right">
-                <span @click="collectionEdit(item)"
+                <span @click.stop="collectionEdit(item)"
                   ><el-icon>
                     <EditPen />
                   </el-icon>
@@ -89,6 +94,7 @@ import AddCollect from '@/components/collection/AddCollect.vue'
 import UpdateCollect from '@/components/collection/UpdateCollect.vue'
 import { ElMessage } from 'element-plus'
 import NeedAuth from '@/components/common/NeedAuth.vue'
+import { useRouter } from 'vue-router'
 
 type Props = {
   id: number
@@ -158,6 +164,12 @@ const deleteCollection = async (id: number) => {
   }
 }
 
+const router = useRouter()
+
+const toCollection = (id: number) => {
+  router.push(`/collection/${id}`)
+}
+
 const collectionEdit = (Collection: Collection) => {
   isVisibleUpdateCollect.value = true
   needUpdateCollection.id = Collection.id
@@ -189,6 +201,9 @@ const collectionEdit = (Collection: Collection) => {
     padding: 5px 10px;
     background-color: #eaf2ff;
     border-radius: 16px;
+  }
+  .addCollectionBtn {
+    margin-top: 15px;
   }
 
   .addCollectionBtn {

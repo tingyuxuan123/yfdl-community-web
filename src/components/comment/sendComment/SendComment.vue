@@ -15,9 +15,17 @@
           >
           <div class="emjoyForm">
             <div class="list">
-              <div class="item" v-for="item in emjoys" :key="item">
+              <div
+                class="item"
+                v-for="item in emjoys.emjoys"
+                :key="item.imgName"
+              >
                 <span>
-                  <img :src="item.url" alt="" @click="emjoyClick(item.url)" />
+                  <img
+                    :src="item.imgUrl"
+                    :alt="item.imgName"
+                    @click="emjoyClick(item.imgUrl, item.imgName)"
+                  />
                 </span>
               </div>
             </div>
@@ -36,10 +44,11 @@ import { reactive, ref, onMounted, onUnmounted, Prop } from 'vue'
 import { comment } from '@/api/comment'
 import type { SendCommentInfo } from '@/api/apiType'
 import { useUserStore } from '@/stores/userStore'
-import { Message } from '@element-plus/icons-vue'
 import { ElMessage } from 'element-plus'
+import emjoys from '@/assets/data/emjoy.json'
+
 const userStore = useUserStore()
-let emjoys = ref([])
+// let emjoys = ref([])
 let isVisible = ref(false)
 
 type Props = {
@@ -49,23 +58,23 @@ type Props = {
 let props = defineProps<Props>()
 let emits = defineEmits(['sendClick'])
 
-let getEmojys = () => {
-  // '@/components/comment/sendComment/emjoy/*.png',
-  const modulesFiles = import.meta.glob('../sendComment/emjoy/*.png', {
-    eager: true
-  })
+// let getEmojys = () => {
+//   // '@/components/comment/sendComment/emjoy/*.png',
+//   const modulesFiles = import.meta.glob('../sendComment/emjoy/*.png', {
+//     eager: true
+//   })
 
-  const arr = Object.keys(modulesFiles).map((i) => {
-    let fileName = i.replace(/(.*\/)*([^.]+).*/gi, '$2') //获取文件名
-    let url: any = modulesFiles[i]
+//   const arr = Object.keys(modulesFiles).map((i) => {
+//     let fileName = i.replace(/(.*\/)*([^.]+).*/gi, '$2') //获取文件名
+//     let url: any = modulesFiles[i]
 
-    return { name: fileName, url: url.default }
-  })
+//     return { name: fileName, url: url.default }
+//   })
 
-  return arr
-}
+//   return arr
+// }
 
-emjoys.value = getEmojys()
+// emjoys.value = getEmojys()
 
 const emjoybtnClick = () => {
   isVisible.value = !isVisible.value
@@ -94,17 +103,18 @@ const commentClick = async () => {
     rootId: props.commentInfo.rootId,
     toCommentId: props.commentInfo.toCommentId,
     toCommentUserId: props.commentInfo.toCommentUserId,
-    content: commentValue
+    content: emjoyToSpan(commentValue)
   }
 
   const res = await comment(data)
   emits('sendClick')
 }
 
-const emjoyClick = (url: string) => {
+const emjoyClick = (url: string, alt: string) => {
   let imgElE = document.createElement('img')
   imgElE.setAttribute('src', url)
-  imgElE.className = 'needSendImg'
+  imgElE.style.marginLeft = '2px'
+  imgElE.setAttribute('alt', alt)
   imgElE.style.width = '16px'
   imgElE.style.height = '16px'
   imgElE.style.verticalAlign = 'text-top'
@@ -113,6 +123,16 @@ const emjoyClick = (url: string) => {
 
 const inputClick = () => {
   isVisible.value = false
+}
+
+//包img标签替换为对应的alt
+const emjoyToSpan = (message: string) => {
+  let content = message.replace(/<img(?:.|\s)*?>/gi, function (item) {
+    let attrReg = /<img[^>]+alt=['"]([^'"]+)['"]+/g
+
+    return attrReg.exec(item)[1]
+  })
+  return content
 }
 </script>
 

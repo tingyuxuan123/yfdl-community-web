@@ -13,7 +13,7 @@
     <div class="entry-item-center">
       <div class="item-left">
         <p>{{ article.title }}</p>
-        <p>{{ article.summary }}</p>
+        <p class="summary">{{ article.summary }}</p>
       </div>
       <div class="item-right">
         <img :src="article.thumbnail" alt="" />
@@ -22,13 +22,15 @@
     <div class="entry-item-bottom">
       <div class="item-left">
         <span
-          ><el-icon><View /></el-icon>{{ article.viewCount }}</span
+          ><el-icon class="icon"><View /></el-icon>{{ article.viewCount }}</span
         >
         <span>
-          <svg-icon iconClass="likes"></svg-icon> {{ article.likesCount }}</span
+          <svg-icon class="icon" iconClass="likes"></svg-icon>
+          {{ article.likesCount }}</span
         >
         <span>
-          <el-icon><ChatDotSquare /></el-icon> {{ article.commentCount }}</span
+          <el-icon class="icon"><ChatDotSquare /></el-icon>
+          {{ article.commentCount }}</span
         >
       </div>
       <div class="item-right">
@@ -168,5 +170,20 @@ const handleClick = () => {
       }
     }
   }
+}
+/* 写注释 */
+.icon {
+  margin-right: 5px;
+}
+
+.summary {
+  padding-right: 10px;
+  text-overflow: -o-ellipsis-lastline;
+  overflow: hidden; //溢出内容隐藏
+  text-overflow: ellipsis; //文本溢出部分用省略号表示
+  display: -webkit-box; //特别显示模式
+  -webkit-line-clamp: 2; //行数
+  line-clamp: 2;
+  -webkit-box-orient: vertical; //盒子中内容竖直排列
 }
 </style>

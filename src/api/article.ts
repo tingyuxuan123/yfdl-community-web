@@ -33,10 +33,51 @@ export const articleListByUserLikes = (userId: number) => {
   })
 }
 
-export const articleListByRecommended = () => {
-  return request('/article/articleListByRecommended', 'get')
+export const articleListByRecommended = (pageinfo: any) => {
+  return request('/article/articleListByRecommended', 'get', {
+    ...pageinfo
+  })
 }
 
-export const articleListByNew = () => {
-  return request('/article/articleListByNew', 'get')
+export const articleListByNew = (pageinfo: any) => {
+  return request('/article/articleListByNew', 'get', {
+    ...pageinfo
+  })
+}
+
+export const articleListByDynamic = (pageinfo: any) => {
+  return request('/article/articleListByDynamic', 'get', {
+    ...pageinfo
+  })
+}
+
+export const articeListbyTag = (pageinfo: any) => {
+  return request('/article/articeListbyTag', 'get', {
+    ...pageinfo
+  })
+}
+
+export const articleListByCollection = (pageinfo: any) => {
+  return request('/article/articleListByCollection', 'get', {
+    ...pageinfo
+  })
+}
+
+export const hotArticleList = () => {
+  return request('/article/hotArticleList', 'get')
+}
+
+export const articleAndCommentCountInfo = () => {
+  return request('/article/articleAndCommentCountInfo', 'get')
+}
+
+export const articleListByRelated = (articleTitle: string) => {
+  return request('/article/articleListByRelated', 'get', {
+    articleTitle
+  })
+}
+export const articleListByCategoryId = (pageinfo: any) => {
+  return request('/article/articleListByCategoryId', 'get', {
+    ...pageinfo
+  })
 }

@@ -1,6 +1,5 @@
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
-
 import App from './App.vue'
 import router from './router'
 import 'element-plus/dist/index.css'
@@ -15,6 +14,7 @@ import '@/assets/icons/icon/iconfont.css'
 
 import './styles/theme.css'
 import './styles/index.scss'
+import { useChatStore } from './stores/chatStore'
 
 const app = createApp(App)
 
@@ -29,5 +29,11 @@ store.use(piniaPluginPersist)
 
 app.use(store)
 app.use(router)
+
+const chatStore = useChatStore()
+//连接服务器
+chatStore.connectSocket()
+//获取聊天列表
+chatStore.getChatUserList()
 
 app.mount('#app')
