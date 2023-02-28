@@ -45,9 +45,9 @@ export const useChatStore = defineStore('chat', {
       const userStore = useUserStore()
       const userId = userStore.userInfo.id
       if ('WebSocket' in window && userStore.token) {
-        this.websocket = new WebSocket(
-          'ws://localhost:7777/websocket/' + userId
-        )
+        console.log(import.meta.env.VITE_WS_ADDRESS)
+
+        this.websocket = new WebSocket(import.meta.env.VITE_WS_ADDRESS + userId)
 
         // 连接错误
         this.websocket.onerror = this.setErrorMessage
