@@ -14,6 +14,7 @@ import '@/assets/icons/icon/iconfont.css'
 
 import './styles/theme.css'
 import './styles/index.scss'
+import 'animate.css/animate.min.css'
 import { useChatStore } from './stores/chatStore'
 
 const app = createApp(App)

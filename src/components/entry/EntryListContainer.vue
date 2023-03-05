@@ -71,6 +71,8 @@ const getArticleListByFollowing = async () => {
 watch(currentMenu, (newValue: string) => {
   //清空当前列表
   articles.value = []
+  console.log(articles.value)
+
   // 重置当前页数
   pageinfo.currentPage = 1
   switch (newValue) {
