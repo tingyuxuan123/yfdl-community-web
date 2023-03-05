@@ -49,7 +49,7 @@
         </el-tab-pane>
       </el-tabs>
 
-      <div class="title"><span></span> 其他登录方式 <span></span></div>
+      <!-- <div class="title"><span></span> 其他登录方式 <span></span></div>
 
       <div class="otherLogin">
         <span class="qq">
@@ -67,7 +67,7 @@
             ></path>
           </svg>
         </span>
-      </div>
+      </div> -->
       <div class="zhushi">未注册邮箱验证后自动注册</div>
     </div>
   </div>
@@ -298,6 +298,7 @@ watchEffect(() => {
   .zhushi {
     color: #999999;
     font-size: 12px;
+    margin-top: 20px;
   }
 }
 </style>
