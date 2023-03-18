@@ -73,6 +73,10 @@ const scrollToTop = (position: number) => {
 
 <style scoped lang="scss">
 .catalogue {
+  max-height: 460px;
+  overflow: auto;
+}
+.catalogue {
   ul {
     li {
       line-height: 30px;

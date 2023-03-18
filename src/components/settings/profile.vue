@@ -50,7 +50,7 @@
           <el-input
             v-model="userInfo.homepage"
             placeholder="填写你的个人主页"
-            maxlength="50"
+            maxlength="100"
             show-word-limit
           />
         </el-form-item>

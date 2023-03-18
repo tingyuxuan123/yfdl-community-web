@@ -127,10 +127,12 @@
                   <span>目录</span>
                 </template>
                 <template #content>
-                  <catalogueVue
-                    :catalogues="cataloguesRef"
-                    :nextheight="0"
-                  ></catalogueVue>
+                  <div class="catalogue">
+                    <catalogueVue
+                      :catalogues="cataloguesRef"
+                      :nextheight="0"
+                    ></catalogueVue>
+                  </div>
                 </template>
               </aside-item>
             </div>
@@ -158,7 +160,14 @@
 </template>
 
 <script lang="ts" setup>
-import { nextTick, reactive, ref, computed, onMounted, onUnmounted } from 'vue'
+import {
+  reactive,
+  ref,
+  onMounted,
+  onUnmounted,
+  Suspense,
+  defineAsyncComponent
+} from 'vue'
 import { useRoute } from 'vue-router'
 import {
   articleDetail,

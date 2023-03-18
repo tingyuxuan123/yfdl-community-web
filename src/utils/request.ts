@@ -39,10 +39,10 @@ instance.interceptors.response.use(
       const scrollStore = usescrollStore()
       userStore.$reset() //清空用户数据
 
-      ElMessage({
-        message: res.data.msg,
-        type: 'warning'
-      })
+      // ElMessage({
+      //   message: res.data.msg,
+      //   type: 'warning'
+      // })
       scrollStore.isVisibleLoginForm = true //跳出登录界面
     }
 

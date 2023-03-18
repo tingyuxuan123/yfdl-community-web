@@ -85,7 +85,7 @@ import { useUserStore } from '@/stores/userStore'
 import { logout } from '@/api/login'
 import { useRouter, useRoute } from 'vue-router'
 import { useChatStore } from '@/stores/chatStore'
-import { flatMap } from 'lodash'
+import { ElMessage } from 'element-plus'
 
 const chatStore = useChatStore()
 let router = useRouter()
@@ -128,7 +128,7 @@ const loginClick = () => {
 }
 
 const handleLogout = async () => {
-  let res = await logout()
+  await logout()
   userStore.$reset()
 }
 
@@ -164,9 +164,27 @@ const toSearch = (e: KeyboardEvent) => {
 }
 
 const toNotification = () => {
+  //判断是否登录
+  let b = isLogin()
+  if (!b) return
   router.push({
     name: 'notification'
   })
+}
+
+const isLogin = () => {
+  if (userStore.token) {
+    //如果token 不存在，说明没登录
+    return true
+  } else {
+    ElMessage({
+      message: '还未登录,请登录后操作！',
+      type: 'warning'
+    })
+    scrollStore.isVisibleLoginForm = true
+
+    return false
+  }
 }
 </script>
 

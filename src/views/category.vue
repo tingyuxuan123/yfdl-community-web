@@ -44,6 +44,7 @@ const categoryInfo = reactive({
 const getCategoryList = async () => {
   const res = await categoryList()
   categorys.value = res.data
+  //默认分类名为索引0的值
   categoryInfo.current = categorys.value[0].name
   pageinfo.categoryId = categorys.value[0].id
   getArticleListByCategoryId()
@@ -64,7 +65,11 @@ const getArticleListByCategoryId = async () => {
 
 const handleClick = (id: number, index: number) => {
   pageinfo.categoryId = id
+
+  categoryInfo.current = categorys.value[index].name
+
   categoryInfo.index = index
+
   //重置文章列表
   articleList.value = []
   //重置当前页

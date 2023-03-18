@@ -70,8 +70,9 @@ nextTick(() => {
 
     hljs.highlightElement(block as HTMLElement)
   })
-
-  emits('handleCatalogue', getCatalogue())
+  setTimeout(() => {
+    emits('handleCatalogue', getCatalogue())
+  })
 })
 
 const getCatalogue = () => {

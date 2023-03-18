@@ -30,7 +30,7 @@
         </el-tab-pane>
         <el-tab-pane label="密码登录" name="second">
           <form action="#">
-            <input type="text" placeholder="邮箱" v-model="pwdForm.email" />
+            <input type="text" placeholder="账号" v-model="pwdForm.email" />
             <div class="pas">
               <input
                 type="password"
@@ -94,6 +94,7 @@ const handleClick = (tab: TabsPaneContext, event: Event) => {
 
 //获取验证码
 const getCode = async () => {
+  isCanSend.value = false
   const res: any = await sendEmail(codeForm.email)
 
   if (res.code == 200) {
@@ -107,7 +108,6 @@ const getCode = async () => {
       type: 'warning'
     })
   }
-  isCanSend.value = false
 }
 
 watch(isCanSend, (newval) => {
