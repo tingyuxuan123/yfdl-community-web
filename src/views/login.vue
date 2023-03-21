@@ -74,14 +74,14 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive, ref, watchEffect, onMounted, onUnmounted, watch } from 'vue'
+import { reactive, ref, watchEffect, watch } from 'vue'
 import { ElMessage, TabsPaneContext } from 'element-plus'
 import modalHelper from '@/utils/modalHelper'
 import { usescrollStore } from '@/stores/useScroll'
 import { sendEmail, loginOrRegisterByCode, login } from '@/api/login'
 import { useUserStore } from '@/stores/userStore'
 import { copy } from '@/utils/copyObject'
-import { followIdsApi } from '@/api/follow'
+import { emailReg } from '@/utils/regUtils'
 
 const userStore = useUserStore()
 
@@ -94,6 +94,16 @@ const handleClick = (tab: TabsPaneContext, event: Event) => {
 
 //获取验证码
 const getCode = async () => {
+  let ispass = emailReg(codeForm.email)
+  if (!ispass) {
+    ElMessage({
+      message: '请输入正确的邮箱后再试！',
+      type: 'warning'
+    })
+
+    return
+  }
+
   isCanSend.value = false
   const res: any = await sendEmail(codeForm.email)
 
@@ -126,8 +136,20 @@ watch(isCanSend, (newval) => {
 const loginClick = async () => {
   let res: any
   if (activeName.value == 'first') {
-    //验证码登录
-    res = await loginOrRegisterByCode(codeForm)
+    if (codeForm.email == '' || codeForm.email == null) {
+      ElMessage({
+        message: '邮箱不能为空',
+        type: 'warning'
+      })
+    } else if (codeForm.code == '' || codeForm.code == null) {
+      ElMessage({
+        message: '验证码不能为空',
+        type: 'warning'
+      })
+    } else {
+      //邮箱验证码
+      res = await loginOrRegisterByCode(codeForm)
+    }
   } else {
     //密码登录
     res = await login(pwdForm.email, pwdForm.pwd)

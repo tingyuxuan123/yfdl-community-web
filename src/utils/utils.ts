@@ -48,6 +48,7 @@ export const scrollToTop = (position: number) => {
   document.documentElement.scrollTop = position
 }
 
+// 聊天时间的格式化
 export const showTimePipe = (unix_stamp) => {
   // unix_stamp 精确到微秒
   const _today_obj = new Date(),
